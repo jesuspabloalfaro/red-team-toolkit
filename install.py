@@ -1,4 +1,3 @@
-import pathlib
 import subprocess
 
 class Install:
@@ -15,13 +14,75 @@ class Install:
 
     # Installing Scripts
     def install_scripts(self):
-        print(f"{self._INFO} Installing Linpeas...")
-        try:
-            subprocess.run(["wget", "https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh", "-o", f"{pathlib.Path().resolve()}/scripts/linpeas.sh"])
-            print(f"{self._SUCCESS} Linpeas Installed.")
-        except:
-            print(f"{self._ERROR} There was an error in the installation.")
+        urls = ["https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh",
+                "https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASany_ofs.exe",
+                "https://gist.githubusercontent.com/joswr1ght/22f40787de19d80d110b37fb79ac3985/raw/50008b4501ccb7f804a61bc2e1a3d1df1cb403c4/easy-simple-php-webshell.php",
+                "https://raw.githubusercontent.com/WhiteWinterWolf/wwwolf-php-webshell/master/webshell.php"]
+        
+        script_names = ["linpeas.sh", "winPEAS.exe", "easy-php-webshell.php", "webshell.php"]
+
+        for i in range(0,len(urls)):
+            print(f"{self._INFO} Installing {script_names[i]}...")
+            subprocess.run(["su", "jp", "-c", f"wget {urls[i]} -o /opt/red-team-toolkit/scripts/{script_names[i]}"])
+            print(f"{self._SUCCESS} {script_names[i]} Installed.")
+
+        # Delete Duplicates
+        subprocess.run(["rm", "-rf", "easy-simple-php-webshell.php", "linpeas.sh", "webshell.php", "winPEASany_ofs.exe"])
+
+    def install_packages(self):
+        packages = "python3-venv seclists curl dnsrecon enum4linux feroxbuster gobuster impacket-scripts nbtscan nikto nmap onesixtyone oscanner redis-tools smbclient smbmap snmp sslscan sipvicious tnscmd10g whatweb wkhtmltopdf"
+        for i in range(0, len(packages)):
+            print(f"{self._INFO} Installing {packages[i]}...")
+            subprocess.run(["sudo", "apt", "install", {packages[i]}, "-y"])
+            print(f"{self._SUCCESS} {packages[i]} Installed.")
+
+    def install_tools(self):
+        # Installing AutoRecon
+        print(f"{self._INFO} Installing pipx...")
+        subprocess.run(["su", "kali", "-c", "python3 -m pip install --user pipx"])
+        print(f"{self._SUCCESS} Pipx Installed.")
+
+        print(f"{self._INFO} Installing AutoRecon...")
+        subprocess.run(["python3" "-m", "pipx", "ensurepath"])
+        subprocess.run(["pipx", "install", "git+https://github.com/Tib3rius/AutoRecon.git"])
+        subprocess.run(["sudo", "env", "PATH=$PATH", "autorecon"])
+        print(f"{self._SUCCESS} AutoRecon Installed.")
+
+        # Installing CME
+        print(f"{self._INFO} Installing CrackMapExec...")
+        subprocess.run(["sudo", "apt", "install", "crackmapexec", "-y"])
+        print(f"{self._SUCCESS} CrackMapExec Installed.")
+
+        # Installing Villain
+        print(f"{self._INFO} Installing Villain...")
+        subprocess.run(["sudo", "apt", "install", "villain", "-y"])
+        print(f"{self._SUCCESS} Villain Installed.")
+
+        # Installing Ligolo-ng
+        print(f"{self._INFO} Installing Ligolo-ng...")
+        subprocess.run(["git", "clone", "https://github.com/nicocha30/ligolo-ng.git /opt/"])
+        print(f"{self._SUCCESS} Ligolo-ng Installed.")
+
+        # Installing PrintSpoofer64.exe
+        print(f"{self._INFO} Installing PrintSpoofer64.exe...")
+        subprocess.run(["su", "kali", "-c", f"wget https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer64.exe -o /opt/red-team-toolkit/tools/PrintSpoofer64.exe"])
+        print(f"{self._SUCCESS} PrintSpoofer64.exe Installed.")
+
+        # Installing nc64.exe 
+        print(f"{self._INFO} Installing nc64.exe...")
+        subprocess.run(["su", "kali", "-c", f"wget https://raw.githubusercontent.com/int0x33/nc.exe/master/nc64.exe -o /opt/red-team-toolkit/tools/nc64.exe"])
+        print(f"{self._SUCCESS} nc64.exe Installed.")
+
+    def change_command(self):
+        # Give access to the folder to kali user
+        print(f"{self._INFO} Attempting to Transfer /opt/red-team-toolkit Ownership to kali...")
+        subprocess.run(["chown", "-R", "kali:kali", "/opt/red-team-toolkit"])
+        print(f"{self._SUCCESS} Ownership Changed to Kali Successful.")
+
 
 if __name__ == '__main__':
     installer = Install()
+    installer.install_packages()
     installer.install_scripts()
+    installer.install_tools()
+    installer.change_command()
