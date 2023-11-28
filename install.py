@@ -73,6 +73,15 @@ class Install:
         subprocess.run(["su", "kali", "-c", f"wget https://raw.githubusercontent.com/int0x33/nc.exe/master/nc64.exe -o /opt/red-team-toolkit/tools/nc64.exe"])
         print(f"{self._SUCCESS} nc64.exe Installed.")
 
+    def substitute_configs(self):
+        configs = [".bash_aliases", ".bashrc", ".tmux.conf", ".vimrc"]
+        for i in range(0, len(configs)):
+            print(f"{self._INFO} Attempting to change {configs[i]}...")
+            subprocess.run(["mv", f"/opt/red-team-toolkit/configs/{configs[i]}", "~/"])
+            print(f"{self._SUCCESS} {configs[i]} Transfered Successsfully")
+
+        print(f"{self._INFO} Remember to Restart Your Terminal For Changes To Take Affect...")
+
     def change_command(self):
         # Give access to the folder to kali user
         print(f"{self._INFO} Attempting to Transfer /opt/red-team-toolkit Ownership to kali...")
@@ -86,3 +95,4 @@ if __name__ == '__main__':
     installer.install_scripts()
     installer.install_tools()
     installer.change_command()
+    installer.substitute_configs()
