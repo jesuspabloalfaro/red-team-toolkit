@@ -10,7 +10,7 @@
 
 ## [Nc.exe]()
 
-## [PrintSpoofer64.exe]()
+## [PrintSpoofer64.exe](https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer64.exe)
 
 
 # Scripts
