@@ -33,3 +33,12 @@
 
 # Installation Instructions
 ---
+## Directory Structure
+1) Navigate to `/opt`
+
+## Installation Script
+---
+1) Run the command `sudo python3 install.py` to install all modules
+
+## Enjoy
+
