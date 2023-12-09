@@ -1,3 +1,9 @@
+# Red-Team-Toolkit
+A collection of scripts and tools I typically install on fresh Kali
+virtual machines. I created this repo for myself and others to use
+to quickly format their Kali machines without having to manually
+look everything up. Hope you enjoy!
+
 # Tools
 ---
 ## [AutoRecon](https://github.com/Tib3rius/AutoRecon)
