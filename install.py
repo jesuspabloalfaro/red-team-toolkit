@@ -23,7 +23,7 @@ class Install:
         script_names = ["linpeas.sh", "winPEAS.exe", "easy-php-webshell.php", "webshell.php"]
 
         print(f"{self._INFO} Attempting To Create Scripts Folder...")
-        os.system("mkdir /opt/red-team-toolkit/scripts")
+        os.system("su kali -c 'mkdir /opt/red-team-toolkit/scripts'")
         print(f"{self._SUCCESS} Created scripts folder.")
 
         for i in range(0,len(urls)):
@@ -42,7 +42,7 @@ class Install:
         print(f"{self._SUCCESS} Kali Updated and Upgraded Sucessfully.")
 
         # Install all packages
-        packages = ["openssh-client", "openssh-server", "golang-go", "python3-venv", "seclists", "curl", "dnsrecon", "enum4linux", "feroxbuster", "gobuster", "impacket-scripts", "nbtscan", "nikto", "nmap", "onesixtyone", "oscanner", "redis-tools", "smbclient", "smbmap", "snmp", "sslscan", "sipvicious", "tnscmd10g", "whatweb", "wkhtmltopdf", "git"]
+        packages = ["python3-pip", "pipx," "openssh-client", "openssh-server", "golang-go", "python3-venv", "seclists", "curl", "dnsrecon", "enum4linux", "feroxbuster", "gobuster", "impacket-scripts", "nbtscan", "nikto", "nmap", "onesixtyone", "oscanner", "redis-tools", "smbclient", "smbmap", "snmp", "sslscan", "sipvicious", "tnscmd10g", "whatweb", "wkhtmltopdf", "git"]
         for i in range(0, len(packages)):
             print(f"{self._INFO} Installing {packages[i]}...")
             subprocess.run(["apt", "install", "-y", packages[i]])
@@ -51,23 +51,20 @@ class Install:
     def install_tools(self):
         # Create tools folder
         print(f"{self._INFO} Creating Tools Folder...")
-        os.system("mkdir /opt/red-team-toolkit/tools")
+        os.system("su kali -c 'mkdir /opt/red-team-toolkit/tools'")
         print(f"{self._SUCCESS} Tools folder created.")
 
         # Installing AutoRecon
-        print(f"{self._INFO} Installing pipx...")
-        os.system(f"su kali -c 'python3 -m pip install --user pipx'")
-        print(f"{self._SUCCESS} Pipx Installed.")
-
         print(f"{self._INFO} Installing AutoRecon...")
         os.system(f"su kali -c 'python3 -m pipx ensurepath'")
-        os.system(f"su kali -c 'pipx install https://github.com/Tib3rius/AutoRecon.git'")
-        subprocess.run(["sudo", "env", "PATH=$PATH", "autorecon"])
+        os.system("python3 -m pipx ensurepath")
+        os.system(f"pipx install git+https://github.com/Tib3rius/AutoRecon.git'")
+        os.system("PATH=$PATH:/root/.local/bin")
         print(f"{self._SUCCESS} AutoRecon Installed.")
 
         # Installing NetExec
         print(f"{self._INFO} Installing NetExec...")
-        os.system(f"su kali -c 'pipx install https://github.com/Pennyw0rth/NetExec.git'")
+        os.system(f"su kali -c 'pipx install git+https://github.com/Pennyw0rth/NetExec'")
         print(f"{self._SUCCESS} NetExec Installed.")
 
         # Installing Villain
@@ -77,17 +74,17 @@ class Install:
 
         # Installing Ligolo-ng
         print(f"{self._INFO} Installing Ligolo-ng...")
-        os.system(f"git clone https://github.com/nicocha30/ligolo-ng.git /opt/")
+        os.system(f"su kali -c 'git clone https://github.com/nicocha30/ligolo-ng.git /opt/ligolo-ng'")
         print(f"{self._SUCCESS} Ligolo-ng Installed.")
 
         # Installing PrintSpoofer64.exe
         print(f"{self._INFO} Installing PrintSpoofer64.exe...")
-        os.system(f"su kali -c 'curl -L https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer64.exe -o /opt/red-team-toolkit/tools/PrintSpoofer64.exe")
+        os.system(f"su kali -c 'curl -L https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer64.exe -o /opt/red-team-toolkit/tools/PrintSpoofer64.exe'")
         print(f"{self._SUCCESS} PrintSpoofer64.exe Installed.")
 
         # Installing nc64.exe 
         print(f"{self._INFO} Installing nc64.exe...")
-        os.system(f"su kali -c 'curl -L https://raw.githubusercontent.com/int0x33/nc.exe/master/nc64.exe -o /opt/red-team-toolkit/tools/nc64.exe")
+        os.system(f"su kali -c 'curl -L https://raw.githubusercontent.com/int0x33/nc.exe/master/nc64.exe -o /opt/red-team-toolkit/tools/nc64.exe'")
         print(f"{self._SUCCESS} nc64.exe Installed.")
 
     def substitute_configs(self):
@@ -114,9 +111,9 @@ class Install:
     def create_ssh_keys(self):
         # Create ssh keys
         print(f"{self._INFO} Attemping to create ssh keys...")
-        os.system("mkdir ~/.ssh")
+        os.system("su kali -c 'mkdir ~/.ssh'")
         os.system("chmod 700 ~/.ssh")
-        os.system("ssh-keygen -b 521 -t ecdsa -f ~/.ssh/local")
+        os.system("su kali -c 'ssh-keygen -b 521 -t ecdsa -f ~/.ssh/local'")
         print(f"{self._SUCCESS} SSH Keys Created Successfully.")
 
 
