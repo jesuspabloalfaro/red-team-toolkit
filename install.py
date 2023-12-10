@@ -32,7 +32,7 @@ class Install:
     def install_packages(self):
         # Update Upgrade Kali instance
         print(f"{self._INFO} Attempting to update and upgrade Kali...")
-        subprocess.run(["apt", "update", "-y", "&&", "apt", "upgrade", "-y"])
+        subprocess.run(["apt", "update", "&&", "apt", "upgrade"])
         print(f"{self._SUCCESS} Kali Updated and Upgraded Sucessfully.")
 
         # Install all packages
