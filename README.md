@@ -8,7 +8,7 @@ look everything up. Hope you enjoy!
 ---
 ## [AutoRecon](https://github.com/Tib3rius/AutoRecon)
 
-## [CrackMapExec](https://github.com/byt3bl33d3r/CrackMapExec)
+## [NetExec](https://github.com/Pennyw0rth/NetExec.git)
 
 ## [Villain](https://github.com/t3l3machus/Villain)
 
@@ -46,5 +46,6 @@ look everything up. Hope you enjoy!
 ---
 1) Run the command `sudo python3 install.py` to install all modules
 
-## Enjoy
+## TODO
+- Create error checking for installer
 

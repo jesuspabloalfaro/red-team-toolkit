@@ -30,7 +30,13 @@ class Install:
         subprocess.run(["rm", "-rf", "easy-simple-php-webshell.php", "linpeas.sh", "webshell.php", "winPEASany_ofs.exe"])
 
     def install_packages(self):
-        packages = "python3-venv seclists curl dnsrecon enum4linux feroxbuster gobuster impacket-scripts nbtscan nikto nmap onesixtyone oscanner redis-tools smbclient smbmap snmp sslscan sipvicious tnscmd10g whatweb wkhtmltopdf"
+        # Update Upgrade Kali instance
+        print(f"{self._INFO} Attempting to update and upgrade Kali...")
+        subprocess.run(["apt", "update", "-y", "&&", "apt", "upgrade", "-y"])
+        print(f"{self._SUCCESS} Kali Updated and Upgraded Sucessfully.")
+
+        # Install all packages
+        packages = "openssh-client openssh-server golang-go python3-venv seclists curl dnsrecon enum4linux feroxbuster gobuster impacket-scripts nbtscan nikto nmap onesixtyone oscanner redis-tools smbclient smbmap snmp sslscan sipvicious tnscmd10g whatweb wkhtmltopdf git"
         for i in range(0, len(packages)):
             print(f"{self._INFO} Installing {packages[i]}...")
             subprocess.run(["sudo", "apt", "install", {packages[i]}, "-y"])
@@ -48,10 +54,11 @@ class Install:
         subprocess.run(["sudo", "env", "PATH=$PATH", "autorecon"])
         print(f"{self._SUCCESS} AutoRecon Installed.")
 
-        # Installing CME
-        print(f"{self._INFO} Installing CrackMapExec...")
-        subprocess.run(["sudo", "apt", "install", "crackmapexec", "-y"])
-        print(f"{self._SUCCESS} CrackMapExec Installed.")
+        # Installing NetExec
+        print(f"{self._INFO} Installing NetExec...")
+        subprocess.run(["su", "kali", "-c", "pipx", "ensurepath"])
+        subprocess.run(["pipx", "install", "git+https://github.com/Pennyw0rth/NetExec"])
+        print(f"{self._SUCCESS} NetExec Installed.")
 
         # Installing Villain
         print(f"{self._INFO} Installing Villain...")
@@ -84,15 +91,31 @@ class Install:
 
     def change_command(self):
         # Give access to the folder to kali user
-        print(f"{self._INFO} Attempting to Transfer /opt/red-team-toolkit Ownership to kali...")
-        subprocess.run(["chown", "-R", "kali:kali", "/opt/red-team-toolkit"])
+        print(f"{self._INFO} Attempting to Transfer /opt/ Ownership to User kali...")
+        subprocess.run(["chown", "-R", "kali:kali", "/opt/"])
         print(f"{self._SUCCESS} Ownership Changed to Kali Successful.")
+
+    def enable_ssh_service(self):
+        # Enable ssh service for connectivity
+        print(f"{self._INFO} Attempting to enable SSH service...")
+        subprocess.run(["systemctl", "enable", "sshd"])
+        print(f"{self._SUCCESS} SSH Service Started Successfully.")
+    
+    def create_ssh_keys(self):
+        # Create ssh keys
+        print(f"{self._INFO} Attemping to create ssh keys...")
+        subprocess.run(["mkdir", "~/.ssh"])
+        subprocess.run(["chmod", "700", "~/.ssh"])
+        subprocess.run(["ssh-keygen", "-b", "521", "-t", "ecdsa", "-f", "~/.ssh/local"])
+        print(f"{self._SUCCESS} SSH Keys Created Successfully.")
 
 
 if __name__ == '__main__':
     installer = Install()
+    installer.change_command()
     installer.install_packages()
     installer.install_scripts()
     installer.install_tools()
-    installer.change_command()
     installer.substitute_configs()
+    installer.enable_ssh_service()
+    installer.create_ssh_keys()
