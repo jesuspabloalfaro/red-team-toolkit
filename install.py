@@ -32,14 +32,15 @@ class Install:
     def install_packages(self):
         # Update Upgrade Kali instance
         print(f"{self._INFO} Attempting to update and upgrade Kali...")
-        subprocess.run(["apt", "update", "&&", "apt", "upgrade"])
+        subprocess.run(["apt", "update"])
+        subprocess.run(["apt", "upgrade"])
         print(f"{self._SUCCESS} Kali Updated and Upgraded Sucessfully.")
 
         # Install all packages
-        packages = "openssh-client openssh-server golang-go python3-venv seclists curl dnsrecon enum4linux feroxbuster gobuster impacket-scripts nbtscan nikto nmap onesixtyone oscanner redis-tools smbclient smbmap snmp sslscan sipvicious tnscmd10g whatweb wkhtmltopdf git"
+        packages = ["openssh-client", "openssh-server", "golang-go", "python3-venv", "seclists", "curl", "dnsrecon", "enum4linux", "feroxbuster", "gobuster", "impacket-scripts", "nbtscan", "nikto", "nmap", "onesixtyone", "oscanner", "redis-tools", "smbclient", "smbmap", "snmp", "sslscan", "sipvicious", "tnscmd10g", "whatweb", "wkhtmltopdf", "git"]
         for i in range(0, len(packages)):
             print(f"{self._INFO} Installing {packages[i]}...")
-            subprocess.run(["sudo", "apt", "install", {packages[i]}, "-y"])
+            subprocess.run(["apt", "install", {packages[i]}])
             print(f"{self._SUCCESS} {packages[i]} Installed.")
 
     def install_tools(self):
