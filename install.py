@@ -58,7 +58,7 @@ class Install:
         print(f"{self._INFO} Installing AutoRecon...")
         os.system(f"su kali -c 'python3 -m pipx ensurepath'")
         os.system("python3 -m pipx ensurepath")
-        os.system(f"pipx install git+https://github.com/Tib3rius/AutoRecon.git'")
+        os.system(f"pipx install git+https://github.com/Tib3rius/AutoRecon.git")
         os.system("PATH=$PATH:/root/.local/bin")
         print(f"{self._SUCCESS} AutoRecon Installed.")
 
@@ -91,7 +91,7 @@ class Install:
         configs = [".bash_aliases", ".bashrc", ".tmux.conf", ".vimrc"]
         for i in range(0, len(configs)):
             print(f"{self._INFO} Attempting to change {configs[i]}...")
-            os.system(f"cp /opt/red-team-toolkit/scripts/{configs[i]} ~/{configs[i]}")
+            os.system(f"su kali -c 'cp /opt/red-team-toolkit/configs/{configs[i]} ~/{configs[i]}'")
             print(f"{self._SUCCESS} {configs[i]} Transfered Successsfully")
 
         print(f"{self._INFO} Remember to Restart Your Terminal For Changes To Take Affect...")
