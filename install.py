@@ -93,8 +93,12 @@ class Install:
             print(f"{self._INFO} Attempting to change {configs[i]}...")
             os.system(f"su kali -c 'cp /opt/red-team-toolkit/configs/{configs[i]} ~/{configs[i]}'")
             print(f"{self._SUCCESS} {configs[i]} Transfered Successsfully")
-
         print(f"{self._INFO} Remember to Restart Your Terminal For Changes To Take Affect...")
+
+        # Install vim style kit
+        os.system("su kali -c 'mkdir ~/.vim/'")
+        os.system("su kali -c 'mkdir ~/.vim/colors/'")
+        os.system("su kali -c 'cp /opt/red-team-toolkit/configs/deus.vim ~/.vim/colors/deus.vim'")
 
     def change_command(self):
         # Give access to the folder to kali user
