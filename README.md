@@ -35,5 +35,3 @@ look everything up. Hope you enjoy!
 
 # TODO
 - Create error checking in installer
-- Add WPScan
-- Add colors to vim

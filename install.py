@@ -59,7 +59,7 @@ class Install:
         os.system(f"su kali -c 'python3 -m pipx ensurepath'")
         os.system("python3 -m pipx ensurepath")
         os.system(f"pipx install git+https://github.com/Tib3rius/AutoRecon.git")
-        os.system("PATH=$PATH:/root/.local/bin")
+        os.system("python3 -m pipx ensurepath")
         print(f"{self._SUCCESS} AutoRecon Installed.")
 
         # Installing NetExec
