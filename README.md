@@ -6,7 +6,7 @@ look everything up. Hope you enjoy!
 
 # Tools
 - [AutoRecon](https://github.com/Tib3rius/AutoRecon)
-- [CrackMapExec](https://github.com/byt3bl33d3r/CrackMapExec)
+- [NetExec](https://github.com/Pennyw0rth/NetExec)
 - [Villain](https://github.com/t3l3machus/Villain)
 - [Ligolo-ng](https://github.com/nicocha30/ligolo-ng)
 - [nc64.exe](https://github.com/int0x33/nc.exe/)
@@ -33,3 +33,5 @@ look everything up. Hope you enjoy!
 1) Navigate to `/opt`
 2) Run the command `sudo python3 install.py` to install all modules
 
+# TODO
+- Create error checking in installer
