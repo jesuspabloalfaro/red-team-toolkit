@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 class Install:
     # Initializing string markers
@@ -21,9 +22,13 @@ class Install:
         
         script_names = ["linpeas.sh", "winPEAS.exe", "easy-php-webshell.php", "webshell.php"]
 
+        print(f"{self._INFO} Attempting To Create Scripts Folder...")
+        os.system("mkdir /opt/red-team-toolkit/scripts")
+        print(f"{self._SUCCESS} Created scripts folder.")
+
         for i in range(0,len(urls)):
             print(f"{self._INFO} Installing {script_names[i]}...")
-            subprocess.run(["su", "jp", "-c", f"wget {urls[i]} -o /opt/red-team-toolkit/scripts/{script_names[i]}"])
+            os.system(f"su kali -c 'curl -L {urls[i]} -o /opt/red-team-toolkit/scripts/{script_names[i]}'")
             print(f"{self._SUCCESS} {script_names[i]} Installed.")
 
         # Delete Duplicates
@@ -44,21 +49,25 @@ class Install:
             print(f"{self._SUCCESS} {packages[i]} Installed.")
 
     def install_tools(self):
+        # Create tools folder
+        print(f"{self._INFO} Creating Tools Folder...")
+        os.system("mkdir /opt/red-team-toolkit/tools")
+        print(f"{self._SUCCESS} Tools folder created.")
+
         # Installing AutoRecon
         print(f"{self._INFO} Installing pipx...")
-        subprocess.run(["su", "kali", "-c", "python3 -m pip install --user pipx"])
+        os.system(f"su kali -c 'python3 -m pip install --user pipx'")
         print(f"{self._SUCCESS} Pipx Installed.")
 
         print(f"{self._INFO} Installing AutoRecon...")
-        subprocess.run(["su", "kali", "-c", "'python3", "-m", "pipx", "ensurepath'"])
-        subprocess.run(["su", "kali", "-c", "pipx", "install", "git+https://github.com/Tib3rius/AutoRecon.git"])
+        os.system(f"su kali -c 'python3 -m pipx ensurepath'")
+        os.system(f"su kali -c 'pipx install https://github.com/Tib3rius/AutoRecon.git'")
         subprocess.run(["sudo", "env", "PATH=$PATH", "autorecon"])
         print(f"{self._SUCCESS} AutoRecon Installed.")
 
         # Installing NetExec
         print(f"{self._INFO} Installing NetExec...")
-        subprocess.run(["su", "kali", "-c", "pipx", "ensurepath"])
-        subprocess.run(["su", "kali", "-c", "pipx", "install", "git+https://github.com/Pennyw0rth/NetExec"])
+        os.system(f"su kali -c 'pipx install https://github.com/Pennyw0rth/NetExec.git'")
         print(f"{self._SUCCESS} NetExec Installed.")
 
         # Installing Villain
@@ -68,24 +77,24 @@ class Install:
 
         # Installing Ligolo-ng
         print(f"{self._INFO} Installing Ligolo-ng...")
-        subprocess.run(["git", "clone", "https://github.com/nicocha30/ligolo-ng.git /opt/"])
+        os.system(f"git clone https://github.com/nicocha30/ligolo-ng.git /opt/")
         print(f"{self._SUCCESS} Ligolo-ng Installed.")
 
         # Installing PrintSpoofer64.exe
         print(f"{self._INFO} Installing PrintSpoofer64.exe...")
-        subprocess.run(["su", "kali", "-c", f"wget https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer64.exe -o /opt/red-team-toolkit/tools/PrintSpoofer64.exe"])
+        os.system(f"su kali -c 'curl -L https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer64.exe -o /opt/red-team-toolkit/tools/PrintSpoofer64.exe")
         print(f"{self._SUCCESS} PrintSpoofer64.exe Installed.")
 
         # Installing nc64.exe 
         print(f"{self._INFO} Installing nc64.exe...")
-        subprocess.run(["su", "kali", "-c", f"wget https://raw.githubusercontent.com/int0x33/nc.exe/master/nc64.exe -o /opt/red-team-toolkit/tools/nc64.exe"])
+        os.system(f"su kali -c 'curl -L https://raw.githubusercontent.com/int0x33/nc.exe/master/nc64.exe -o /opt/red-team-toolkit/tools/nc64.exe")
         print(f"{self._SUCCESS} nc64.exe Installed.")
 
     def substitute_configs(self):
         configs = [".bash_aliases", ".bashrc", ".tmux.conf", ".vimrc"]
         for i in range(0, len(configs)):
             print(f"{self._INFO} Attempting to change {configs[i]}...")
-            subprocess.run(["cp", f"/opt/red-team-toolkit/configs/{configs[i]}", f"~/{configs[i]}"])
+            os.system(f"cp /opt/red-team-toolkit/scripts/{configs[i]} ~/{configs[i]}")
             print(f"{self._SUCCESS} {configs[i]} Transfered Successsfully")
 
         print(f"{self._INFO} Remember to Restart Your Terminal For Changes To Take Affect...")
@@ -105,9 +114,9 @@ class Install:
     def create_ssh_keys(self):
         # Create ssh keys
         print(f"{self._INFO} Attemping to create ssh keys...")
-        subprocess.run(["mkdir", "~/.ssh"])
-        subprocess.run(["chmod", "700", "~/.ssh"])
-        subprocess.run(["ssh-keygen", "-b", "521", "-t", "ecdsa", "-f", "~/.ssh/local"])
+        os.system("mkdir ~/.ssh")
+        os.system("chmod 700 ~/.ssh")
+        os.system("ssh-keygen -b 521 -t ecdsa -f ~/.ssh/local")
         print(f"{self._SUCCESS} SSH Keys Created Successfully.")
 
 
