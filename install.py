@@ -40,7 +40,7 @@ class Install:
         packages = ["openssh-client", "openssh-server", "golang-go", "python3-venv", "seclists", "curl", "dnsrecon", "enum4linux", "feroxbuster", "gobuster", "impacket-scripts", "nbtscan", "nikto", "nmap", "onesixtyone", "oscanner", "redis-tools", "smbclient", "smbmap", "snmp", "sslscan", "sipvicious", "tnscmd10g", "whatweb", "wkhtmltopdf", "git"]
         for i in range(0, len(packages)):
             print(f"{self._INFO} Installing {packages[i]}...")
-            subprocess.run(["apt", "install", packages[i]], "-y")
+            subprocess.run(["apt", "install", "-y", packages[i]])
             print(f"{self._SUCCESS} {packages[i]} Installed.")
 
     def install_tools(self):
@@ -50,20 +50,20 @@ class Install:
         print(f"{self._SUCCESS} Pipx Installed.")
 
         print(f"{self._INFO} Installing AutoRecon...")
-        subprocess.run(["python3" "-m", "pipx", "ensurepath"])
-        subprocess.run(["pipx", "install", "git+https://github.com/Tib3rius/AutoRecon.git"])
+        subprocess.run(["su", "kali", "-c", "'python3", "-m", "pipx", "ensurepath'"])
+        subprocess.run(["su", "kali", "-c", "pipx", "install", "git+https://github.com/Tib3rius/AutoRecon.git"])
         subprocess.run(["sudo", "env", "PATH=$PATH", "autorecon"])
         print(f"{self._SUCCESS} AutoRecon Installed.")
 
         # Installing NetExec
         print(f"{self._INFO} Installing NetExec...")
         subprocess.run(["su", "kali", "-c", "pipx", "ensurepath"])
-        subprocess.run(["pipx", "install", "git+https://github.com/Pennyw0rth/NetExec"])
+        subprocess.run(["su", "kali", "-c", "pipx", "install", "git+https://github.com/Pennyw0rth/NetExec"])
         print(f"{self._SUCCESS} NetExec Installed.")
 
         # Installing Villain
         print(f"{self._INFO} Installing Villain...")
-        subprocess.run(["sudo", "apt", "install", "villain", "-y"])
+        subprocess.run(["apt", "install", "villain", "-y"])
         print(f"{self._SUCCESS} Villain Installed.")
 
         # Installing Ligolo-ng
@@ -85,7 +85,7 @@ class Install:
         configs = [".bash_aliases", ".bashrc", ".tmux.conf", ".vimrc"]
         for i in range(0, len(configs)):
             print(f"{self._INFO} Attempting to change {configs[i]}...")
-            subprocess.run(["mv", f"/opt/red-team-toolkit/configs/{configs[i]}", "~/"])
+            subprocess.run(["cp", f"/opt/red-team-toolkit/configs/{configs[i]}", f"~/{configs[i]}"])
             print(f"{self._SUCCESS} {configs[i]} Transfered Successsfully")
 
         print(f"{self._INFO} Remember to Restart Your Terminal For Changes To Take Affect...")
@@ -99,7 +99,7 @@ class Install:
     def enable_ssh_service(self):
         # Enable ssh service for connectivity
         print(f"{self._INFO} Attempting to enable SSH service...")
-        subprocess.run(["systemctl", "enable", "sshd"])
+        subprocess.run(["systemctl", "enable", "ssh"])
         print(f"{self._SUCCESS} SSH Service Started Successfully.")
     
     def create_ssh_keys(self):
