@@ -88,7 +88,7 @@ class Install:
         print(f"{self._SUCCESS} nc64.exe Installed.")
 
     def substitute_configs(self):
-        configs = [".bash_aliases", ".bashrc", ".tmux.conf", ".vimrc"]
+        configs = [".bash_aliases", ".bashrc", ".tmux.conf", ".vimrc", ".zshrc"]
         for i in range(0, len(configs)):
             print(f"{self._INFO} Attempting to change {configs[i]}...")
             os.system(f"su kali -c 'cp /opt/red-team-toolkit/configs/{configs[i]} ~/{configs[i]}'")
