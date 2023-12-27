@@ -122,10 +122,10 @@ class Install:
 
     def install_python2_support(self):
         print(f"{self._INFO} Attemping to install pip2...")
-        os.system("su kali -c 'wget https://bootstrap.pypa.io/pip/2.7/get-pip.py -o /opt/red-team-toolkit/scripts/get-pip.py'")
+        os.system("su kali -c 'curl -L  https://bootstrap.pypa.io/pip/2.7/get-pip.py -o /opt/red-team-toolkit/scripts/get-pip.py'")
         os.system("python2 /opt/red-team-toolkit/scripts/get-pip.py")
         os.system("su kali -c 'pip2 install --upgrade setuptools'")
-        os.system("apt-get install python-dev virtualenv -y")
+        os.system("apt-get install python2-dev virtualenv -y")
         print(f"{self._SUCCESS} PIP2 Installed Successfully.")
 
 
