@@ -120,6 +120,15 @@ class Install:
         os.system("su kali -c 'ssh-keygen -b 521 -t ecdsa -f ~/.ssh/local'")
         print(f"{self._SUCCESS} SSH Keys Created Successfully.")
 
+    def install_python2_support(self):
+        print(f"{self._INFO} Attemping to install pip2...")
+        os.system("su kali -c 'wget https://bootstrap.pypa.io/pip/2.7/get-pip.py -o /opt/red-team-toolkit/scripts/get-pip.py'")
+        os.system("python2 /opt/red-team-toolkit/scripts/get-pip.py")
+        os.system("su kali -c 'pip2 install --upgrade setuptools'")
+        os.system("apt-get install python-dev virtualenv -y")
+        print(f"{self._SUCCESS} PIP2 Installed Successfully.")
+
+
 
 if __name__ == '__main__':
     installer = Install()
@@ -127,6 +136,7 @@ if __name__ == '__main__':
     installer.install_packages()
     installer.install_scripts()
     installer.install_tools()
+    installer.install_python2_support()
     installer.substitute_configs()
     installer.enable_ssh_service()
     installer.create_ssh_keys()
