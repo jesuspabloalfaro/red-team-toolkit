@@ -87,6 +87,11 @@ class Install:
         os.system(f"su kali -c 'curl -L https://raw.githubusercontent.com/int0x33/nc.exe/master/nc64.exe -o /opt/red-team-toolkit/tools/nc64.exe'")
         print(f"{self._SUCCESS} nc64.exe Installed.")
 
+        # Installing sliver 
+        print(f"{self._INFO} Installing Sliver C2...")
+        os.system(f"su kali -c 'curl https://sliver.sh/install' | sudo bash")
+        print(f"{self._SUCCESS} Sliver C2 Installed.")
+
     def substitute_configs(self):
         configs = [".bash_aliases", ".bashrc", ".tmux.conf", ".vimrc", ".zshrc"]
         for i in range(0, len(configs)):
