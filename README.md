@@ -30,8 +30,39 @@ look everything up. Hope you enjoy!
 
 
 # Installation Instructions
-1) Navigate to `/opt`
-2) Run the command `sudo python3 install.py` to install all modules
+1) Update and Upgrade your current system while installing python + virtual environment + pip
+```sudo apt update -y && sudo apt upgrade -y && sudo apt install python3 python3-venv python3-pip```
+
+2) Clone the repository in any directory of your choosing
+```git clone https://github.com/jesuspabloalfaro/red-team-toolkit.git```
+
+3) Navigate to the repository
+```cd red-team-toolkit```
+
+4) Create a virtual environment
+```python3 -m venv venv```
+
+5) Activate your virtual environment
+```source venv/bin/activate```
+
+6) Install the required dependencies
+```pip3 install -r requirements.txt``` 
+
+7) Install the tools and scripts. You will be prompted to enter your password for SUDO privileges at times.
+```python3 install.py [OPTIONS]```
+*Reference Script Arugments below to view the full list of options.*
+
+# Common Usages
+## Script Arguments
+```--no-config```
+Flag that stops my personal configs from overriding your existing configs.
+If you choose to use my configs, do not set this flag.
+
+## Autorecon
+Autorecon is a great tool to do alot of enumeration for CTF's. Rather than pass lots of arguments to autorecon,
+you can simply run the alias `scan {IP_ADDRESS}` to have my personal autorecon flags set. The default location
+to where the scan results are stored are in `/home/kali/Documents/scan` 
 
 # TODO
 - Create error checking in installer
+- Create modularity
